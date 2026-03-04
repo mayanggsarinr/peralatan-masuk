@@ -1,132 +1,199 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="id">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-  <title>Data Aset - PLN Asset Tracker</title>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css">
-</head>
-<body>
-
-  <!-- HEADER -->
-  <div class="app-header">
-    <div class="header-top">
-      <div class="header-logo">
-        <div class="header-logo-img" style="background:white;border-radius:50%;padding:4px">
-          <img src="img/logo-pln.jpeg" alt="Logo PLN" style="width:28px;height:28px;object-fit:contain">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0"
+    />
+    <title>Data Aset - PLN Asset Tracker</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <!-- HEADER -->
+    <div class="app-header">
+      <div class="header-top">
+        <div class="header-logo">
+          <div
+            class="header-logo-img"
+            style="background: white; border-radius: 50%; padding: 4px"
+          >
+            <img
+              src="img/logo-pln.jpeg"
+              alt="Logo PLN"
+              style="width: 28px; height: 28px; object-fit: contain"
+            />
+          </div>
+          <div>
+            <div class="header-title">PLN Electricity Service</div>
+            <div class="header-subtitle">UL Palembang</div>
+          </div>
         </div>
+        <button class="btn-logout" onclick="doLogout()">Keluar</button>
+      </div>
+    </div>
+
+    <!-- KONTEN -->
+    <div class="app-content">
+      <div
+        style="
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          margin-bottom: 14px;
+        "
+      >
         <div>
-          <div class="header-title">PLN Electricity Service</div>
-          <div class="header-subtitle">UL Palembang</div>
+          <div class="section-header">Data Aset</div>
+          <div class="section-sub" style="margin-bottom: 0">
+            Semua kendaraan &amp; peralatan tercatat
+          </div>
+        </div>
+        <span class="chip" id="jumlahAset">0 aset</span>
+      </div>
+
+      <!-- Pencarian -->
+      <div class="search-box">
+        <span class="search-icon">🔍</span>
+        <input
+          type="text"
+          id="inputCari"
+          placeholder="Cari nama aset atau ULP..."
+          oninput="tampilData()"
+        />
+        <button class="search-clear" id="btnHapusCari" onclick="hapusCari()">
+          ✕
+        </button>
+      </div>
+
+      <!-- Filter Status -->
+      <div class="filter-row" id="filterStatus">
+        <button
+          class="filter-chip active"
+          onclick="setFilterStatus('semua', this)"
+        >
+          Semua
+        </button>
+      </div>
+
+      <!-- Filter ULP -->
+      <div class="filter-row" id="ulpFilters"></div>
+
+      <div class="result-info" id="infoHasil"></div>
+
+      <!-- Tabel -->
+      <div class="card" style="padding: 0; overflow: hidden">
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>No</th>
+                <th>Kendaraan / Peralatan</th>
+                <th>ULP</th>
+                <th>Tgl UL</th>
+                <th>Tgl ULP</th>
+                <th>Usia (hr)</th>
+                <th>Ekonomis (hr)</th>
+                <th>Sisa (hr)</th>
+                <th>Status</th>
+                <th>Foto</th>
+              </tr>
+            </thead>
+            <tbody id="tabelBody">
+              <tr>
+                <td colspan="10">
+                  <div class="empty-state">
+                    <div class="empty-icon">📦</div>
+                    <div class="empty-text">Belum ada data</div>
+                    <div class="empty-sub">
+                      Tambahkan melalui halaman Entry Data
+                    </div>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
-      <button class="btn-logout" onclick="doLogout()">Keluar</button>
     </div>
-  </div>
+    <!-- app-content -->
 
-  <!-- KONTEN -->
-  <div class="app-content">
+    <!-- BOTTOM NAV -->
+    <nav class="bottom-nav">
+      <a href="entry.html" class="nav-item">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+          <rect
+            x="3"
+            y="3"
+            width="18"
+            height="18"
+            rx="3"
+            stroke="#6B7A99"
+            stroke-width="2"
+          />
+          <path
+            d="M8 12h8M12 8v8"
+            stroke="#6B7A99"
+            stroke-width="2"
+            stroke-linecap="round"
+          />
+        </svg>
+        <span>Entry</span>
+      </a>
+      <a href="data.html" class="nav-item active">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+          <path
+            d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2"
+            stroke="#003087"
+            stroke-width="2"
+            stroke-linecap="round"
+          />
+          <rect
+            x="9"
+            y="3"
+            width="6"
+            height="4"
+            rx="1"
+            stroke="#003087"
+            stroke-width="2"
+          />
+          <path
+            d="M9 12h6M9 16h4"
+            stroke="#003087"
+            stroke-width="2"
+            stroke-linecap="round"
+          />
+        </svg>
+        <span>Data</span>
+      </a>
+      <a href="output.html" class="nav-item">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+          <path
+            d="M18 20V10M12 20V4M6 20v-6"
+            stroke="#6B7A99"
+            stroke-width="2"
+            stroke-linecap="round"
+          />
+        </svg>
+        <span>Output</span>
+      </a>
+    </nav>
 
-    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
-      <div>
-        <div class="section-header">Data Aset</div>
-        <div class="section-sub" style="margin-bottom:0">Semua kendaraan &amp; peralatan tercatat</div>
-      </div>
-      <span class="chip" id="jumlahAset">0 aset</span>
+    <!-- Modal Foto -->
+    <div class="img-modal" id="imgModal" onclick="tutupFoto()">
+      <button class="img-modal-close" onclick="tutupFoto()">✕</button>
+      <img id="modalImg" src="" alt="Foto Aset" />
     </div>
 
-    <!-- Pencarian -->
-    <div class="search-box">
-      <span class="search-icon">🔍</span>
-      <input type="text" id="inputCari" placeholder="Cari nama aset atau ULP..." oninput="tampilData()">
-      <button class="search-clear" id="btnHapusCari" onclick="hapusCari()">✕</button>
-    </div>
+    <!-- Toast -->
+    <div class="toast" id="toast"></div>
 
-    <!-- Filter Status -->
-    <div class="filter-row" id="filterStatus">
-      <button class="filter-chip active" onclick="setFilterStatus('semua', this)">Semua</button>
-      <button class="filter-chip" onclick="setFilterStatus('normal', this)">🟢 Normal</button>
-      <button class="filter-chip" onclick="setFilterStatus('hampir', this)">🟡 Hampir Habis</button>
-      <button class="filter-chip" onclick="setFilterStatus('kritis', this)">🔴 Kritis</button>
-    </div>
-
-    <!-- Filter ULP -->
-    <div class="filter-row" id="ulpFilters"></div>
-
-    <div class="result-info" id="infoHasil"></div>
-
-    <!-- Tabel -->
-    <div class="card" style="padding:0;overflow:hidden">
-      <div class="table-wrap">
-        <table>
-          <thead>
-            <tr>
-              <th>No</th>
-              <th>Kendaraan / Peralatan</th>
-              <th>ULP</th>
-              <th>Tgl UL</th>
-              <th>Tgl ULP</th>
-              <th>Usia (hr)</th>
-              <th>Ekonomis (hr)</th>
-              <th>Sisa (hr)</th>
-              <th>Status</th>
-              <th>Foto</th>
-            </tr>
-          </thead>
-          <tbody id="tabelBody">
-            <tr>
-              <td colspan="10">
-                <div class="empty-state">
-                  <div class="empty-icon">📦</div>
-                  <div class="empty-text">Belum ada data</div>
-                  <div class="empty-sub">Tambahkan melalui halaman Entry Data</div>
-                </div>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-
-  </div><!-- app-content -->
-
-  <!-- BOTTOM NAV -->
-  <nav class="bottom-nav">
-    <a href="entry.html" class="nav-item">
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-        <rect x="3" y="3" width="18" height="18" rx="3" stroke="#6B7A99" stroke-width="2"/>
-        <path d="M8 12h8M12 8v8" stroke="#6B7A99" stroke-width="2" stroke-linecap="round"/>
-      </svg>
-      <span>Entry</span>
-    </a>
-    <a href="data.html" class="nav-item active">
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-        <path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2" stroke="#003087" stroke-width="2" stroke-linecap="round"/>
-        <rect x="9" y="3" width="6" height="4" rx="1" stroke="#003087" stroke-width="2"/>
-        <path d="M9 12h6M9 16h4" stroke="#003087" stroke-width="2" stroke-linecap="round"/>
-      </svg>
-      <span>Data</span>
-    </a>
-    <a href="output.html" class="nav-item">
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-        <path d="M18 20V10M12 20V4M6 20v-6" stroke="#6B7A99" stroke-width="2" stroke-linecap="round"/>
-      </svg>
-      <span>Output</span>
-    </a>
-  </nav>
-
-  <!-- Modal Foto -->
-  <div class="img-modal" id="imgModal" onclick="tutupFoto()">
-    <button class="img-modal-close" onclick="tutupFoto()">✕</button>
-    <img id="modalImg" src="" alt="Foto Aset">
-  </div>
-
-  <!-- Toast -->
-  <div class="toast" id="toast"></div>
-
-  <script src="js/storage.js"></script>
-  <script src="js/auth.js"></script>
-  <script src="js/data.js"></script>
-</body>
+    <script src="js/storage.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/data.js"></script>
+  </body>
 </html>

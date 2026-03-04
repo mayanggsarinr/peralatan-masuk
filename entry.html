@@ -1,181 +1,274 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="id">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-  <title>Entry Data - PLN Asset Tracker</title>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css">
-</head>
-<body>
-
-  <!-- HEADER -->
-  <div class="app-header">
-    <div class="header-top">
-      <div class="header-logo">
-        <div class="header-logo-img" style="background:white;border-radius:50%;padding:4px">
-          <img src="img/logo-pln.jpeg" alt="Logo PLN" style="width:28px;height:28px;object-fit:contain">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0"
+    />
+    <title>Entry Data - PLN Asset Tracker</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <!-- HEADER -->
+    <div class="app-header">
+      <div class="header-top">
+        <div class="header-logo">
+          <div
+            class="header-logo-img"
+            style="background: white; border-radius: 50%; padding: 4px"
+          >
+            <img
+              src="img/logo-pln.jpeg"
+              alt="Logo PLN"
+              style="width: 28px; height: 28px; object-fit: contain"
+            />
+          </div>
+          <div>
+            <div class="header-title">PLN Electricity Service</div>
+            <div class="header-subtitle">UL Palembang</div>
+          </div>
         </div>
-        <div>
-          <div class="header-title">PLN Electricity Service</div>
-          <div class="header-subtitle">UL Palembang</div>
-        </div>
+        <button class="btn-logout" onclick="doLogout()">Keluar</button>
       </div>
-      <button class="btn-logout" onclick="doLogout()">Keluar</button>
     </div>
-  </div>
 
-  <!-- KONTEN -->
-  <div class="app-content">
-
-    <div class="section-header">Entry Data Aset</div>
-    <div class="section-sub">Formulir pencatatan kendaraan &amp; peralatan</div>
-
-    <!-- Info Kendaraan -->
-    <div class="card">
-      <div class="card-title">🚗 Informasi Kendaraan / Peralatan</div>
-
-      <div class="form-group">
-        <label class="form-label">No. Aset</label>
-        <input class="form-input" id="f_no" type="text" placeholder="Nomor aset (opsional)">
+    <!-- KONTEN -->
+    <div class="app-content">
+      <div class="section-header">Entry Data Aset</div>
+      <div class="section-sub">
+        Formulir pencatatan kendaraan &amp; peralatan
       </div>
 
-      <div class="form-group">
-        <label class="form-label">Nama Kendaraan / Peralatan</label>
-        <input class="form-input" id="f_nama" type="text" placeholder="Contoh: Mobil Pickup / Genset">
-      </div>
+      <!-- Info Kendaraan -->
+      <div class="card">
+        <div class="card-title">🚗 Informasi Kendaraan / Peralatan</div>
 
-      <div class="form-row">
         <div class="form-group">
-          <label class="form-label">Tgl Diterima UL</label>
-          <input class="form-input" id="f_tgl_ul" type="date" onchange="hitungUsia()">
+          <label class="form-label">No. Aset</label>
+          <input
+            class="form-input"
+            id="f_no"
+            type="text"
+            placeholder="Nomor aset (opsional)"
+          />
         </div>
+
         <div class="form-group">
-          <label class="form-label">Tgl Diterima ULP</label>
-          <input class="form-input" id="f_tgl_ulp" type="date" onchange="hitungUsia()">
+          <label class="form-label">Nama Kendaraan / Peralatan</label>
+          <input
+            class="form-input"
+            id="f_nama"
+            type="text"
+            placeholder="Contoh: Mobil / Genset"
+          />
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Tgl Diterima UL</label>
+            <input
+              class="form-input"
+              id="f_tgl_ul"
+              type="date"
+              onchange="hitungUsia()"
+            />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Tgl Diterima ULP</label>
+            <input
+              class="form-input"
+              id="f_tgl_ulp"
+              type="date"
+              onchange="hitungUsia()"
+            />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">ULP Penerima</label>
+          <select class="form-input" id="f_ulp">
+            <option value="">-- Pilih ULP --</option>
+            <option value="Ampera">Ampera</option>
+            <option value="Mariana">Mariana</option>
+            <option value="Pangkalan Bali">Pangkalan Bali</option>
+            <option value="Rivai">Rivai</option>
+            <option value="Sekayu">Sekayu</option>
+            <option value="Sungai Lilin">Sungai Lilin</option>
+            <option value="Sukarame">Sukarame</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Masa Ekonomis (hari)</label>
+          <input
+            class="form-input"
+            id="f_masa_ekonomis"
+            type="number"
+            placeholder="Contoh: 1825 (= 5 tahun)"
+            onchange="hitungUsia()"
+          />
         </div>
       </div>
 
-      <div class="form-group">
-        <label class="form-label">ULP Penerima</label>
-        <select class="form-input" id="f_ulp">
-          <option value="">-- Pilih ULP --</option>
-          <option value="Rivai">Rivai</option>
-          <option value="Sukarame">Sukarame</option>
-          <option value="Ampera">Ampera</option>
-          <option value="Ilir">Ilir</option>
-          <option value="Plaju">Plaju</option>
-        </select>
-      </div>
+      <!-- Kalkulasi Otomatis -->
+      <div class="card">
+        <div class="card-title">📅 Kalkulasi Otomatis</div>
 
-      <div class="form-group">
-        <label class="form-label">Masa Ekonomis (hari)</label>
-        <input class="form-input" id="f_masa_ekonomis" type="number" placeholder="Contoh: 1825 (= 5 tahun)" onchange="hitungUsia()">
-      </div>
-    </div>
-
-    <!-- Kalkulasi Otomatis -->
-    <div class="card">
-      <div class="card-title">📅 Kalkulasi Otomatis</div>
-
-      <div class="form-group">
-        <label class="form-label">Usia Pemakaian (hari ini − tgl diterima)</label>
-        <div class="calc-display" id="calc_usia">—</div>
-      </div>
-
-      <div class="form-group">
-        <label class="form-label">Sisa Masa Ekonomis (masa ekonomis − usia)</label>
-        <div class="calc-display" id="calc_sisa">—</div>
-      </div>
-
-      <div class="form-group">
-        <label class="form-label">Status Aset</label>
-        <div id="calc_status" style="margin-top:4px">—</div>
-      </div>
-    </div>
-
-    <!-- Eviden -->
-    <div class="card">
-      <div class="card-title">📎 Eviden Dokumen</div>
-
-      <div class="form-group">
-        <label class="form-label">Eviden BA (Berita Acara)</label>
-        <div class="file-upload" onclick="document.getElementById('file_ba').click()">
-          <div>📄</div>
-          <div class="file-upload-text">Tap untuk upload file BA (PDF, PNG, JPG)</div>
+        <div class="form-group">
+          <label class="form-label"
+            >Usia Pemakaian (hari ini − tgl diterima)</label
+          >
+          <div class="calc-display" id="calc_usia">—</div>
         </div>
-        <input type="file" id="file_ba" multiple accept=".pdf,.png,.jpg,.jpeg"
-          style="display:none" onchange="previewFiles('file_ba','prev_ba')">
-        <div class="file-preview" id="prev_ba"></div>
-      </div>
 
-      <div class="form-group">
-        <label class="form-label">Eviden Foto Aset</label>
-        <div class="file-upload" onclick="document.getElementById('file_foto').click()">
-          <div>📷</div>
-          <div class="file-upload-text">Tap untuk upload foto aset</div>
+        <div class="form-group">
+          <label class="form-label"
+            >Sisa Masa Ekonomis (masa ekonomis − usia)</label
+          >
+          <div class="calc-display" id="calc_sisa">—</div>
         </div>
-        <input type="file" id="file_foto" multiple accept="image/*"
-          style="display:none" onchange="previewFiles('file_foto','prev_foto')">
-        <div class="file-preview" id="prev_foto"></div>
+
+        <div class="form-group">
+          <label class="form-label">Status Aset</label>
+          <div id="calc_status" style="margin-top: 4px">—</div>
+        </div>
       </div>
+
+      <!-- Eviden -->
+      <div class="card">
+        <div class="card-title">📎 Eviden Dokumen</div>
+
+        <div class="form-group">
+          <label class="form-label">Eviden BA (Berita Acara)</label>
+          <div
+            class="file-upload"
+            onclick="document.getElementById('file_ba').click()"
+          >
+            <div>📄</div>
+            <div class="file-upload-text">
+              Tap untuk upload file BA (PDF, PNG, JPG)
+            </div>
+          </div>
+          <input
+            type="file"
+            id="file_ba"
+            multiple
+            accept=".pdf,.png,.jpg,.jpeg"
+            style="display: none"
+            onchange="previewFiles('file_ba', 'prev_ba')"
+          />
+          <div class="file-preview" id="prev_ba"></div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Eviden Foto Aset</label>
+          <div
+            class="file-upload"
+            onclick="document.getElementById('file_foto').click()"
+          >
+            <div>📷</div>
+            <div class="file-upload-text">Tap untuk upload foto aset</div>
+          </div>
+          <input
+            type="file"
+            id="file_foto"
+            multiple
+            accept="image/*"
+            style="display: none"
+            onchange="previewFiles('file_foto', 'prev_foto')"
+          />
+          <div class="file-preview" id="prev_foto"></div>
+        </div>
+      </div>
+
+      <button class="btn-primary" onclick="simpanEntry()">
+        ✅ Simpan Data Aset
+      </button>
+      <div style="height: 8px"></div>
+    </div>
+    <!-- app-content -->
+
+    <!-- BOTTOM NAV -->
+    <nav class="bottom-nav">
+      <a href="entry.html" class="nav-item active">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+          <rect
+            x="3"
+            y="3"
+            width="18"
+            height="18"
+            rx="3"
+            stroke="#003087"
+            stroke-width="2"
+          />
+          <path
+            d="M8 12h8M12 8v8"
+            stroke="#003087"
+            stroke-width="2"
+            stroke-linecap="round"
+          />
+        </svg>
+        <span>Entry</span>
+      </a>
+      <a href="data.html" class="nav-item">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+          <path
+            d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2"
+            stroke="#6B7A99"
+            stroke-width="2"
+            stroke-linecap="round"
+          />
+          <rect
+            x="9"
+            y="3"
+            width="6"
+            height="4"
+            rx="1"
+            stroke="#6B7A99"
+            stroke-width="2"
+          />
+          <path
+            d="M9 12h6M9 16h4"
+            stroke="#6B7A99"
+            stroke-width="2"
+            stroke-linecap="round"
+          />
+        </svg>
+        <span>Data</span>
+      </a>
+      <a href="output.html" class="nav-item">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+          <path
+            d="M18 20V10M12 20V4M6 20v-6"
+            stroke="#6B7A99"
+            stroke-width="2"
+            stroke-linecap="round"
+          />
+        </svg>
+        <span>Output</span>
+      </a>
+    </nav>
+
+    <!-- Modal Foto -->
+    <div class="img-modal" id="imgModal" onclick="tutupFoto()">
+      <button class="img-modal-close" onclick="tutupFoto()">✕</button>
+      <img id="modalImg" src="" alt="Foto Aset" />
     </div>
 
-    <!-- Info kontrak -->
-    <div class="card">
-      <div class="card-title">📄 Info Kontrak</div>
-      <div style="padding:12px;background:#EEF3FF;border-radius:10px;border:1px solid #C5D5F5;font-size:13px;color:var(--pln-blue);line-height:1.6">
-        ℹ️ <strong>Jumlah Kontrak</strong> akan otomatis terhitung di halaman Output
-        berdasarkan jumlah kali aset ini di-entry.<br><br>
-        💡 <strong>Realisasi &amp; Selisih</strong> diisi terpisah di halaman Output.
-      </div>
-    </div>
+    <!-- Toast -->
+    <div class="toast" id="toast"></div>
 
-    <button class="btn-primary" onclick="simpanEntry()">✅ Simpan Data Aset</button>
-    <div style="height:8px"></div>
-
-  </div><!-- app-content -->
-
-  <!-- BOTTOM NAV -->
-  <nav class="bottom-nav">
-    <a href="entry.html" class="nav-item active">
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-        <rect x="3" y="3" width="18" height="18" rx="3" stroke="#003087" stroke-width="2"/>
-        <path d="M8 12h8M12 8v8" stroke="#003087" stroke-width="2" stroke-linecap="round"/>
-      </svg>
-      <span>Entry</span>
-    </a>
-    <a href="data.html" class="nav-item">
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-        <path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2" stroke="#6B7A99" stroke-width="2" stroke-linecap="round"/>
-        <rect x="9" y="3" width="6" height="4" rx="1" stroke="#6B7A99" stroke-width="2"/>
-        <path d="M9 12h6M9 16h4" stroke="#6B7A99" stroke-width="2" stroke-linecap="round"/>
-      </svg>
-      <span>Data</span>
-    </a>
-    <a href="output.html" class="nav-item">
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-        <path d="M18 20V10M12 20V4M6 20v-6" stroke="#6B7A99" stroke-width="2" stroke-linecap="round"/>
-      </svg>
-      <span>Output</span>
-    </a>
-  </nav>
-
-  <!-- Modal Foto -->
-  <div class="img-modal" id="imgModal" onclick="tutupFoto()">
-    <button class="img-modal-close" onclick="tutupFoto()">✕</button>
-    <img id="modalImg" src="" alt="Foto Aset">
-  </div>
-
-  <!-- Toast -->
-  <div class="toast" id="toast"></div>
-
-  <script src="js/storage.js"></script>
-  <script src="js/auth.js"></script>
-  <script src="js/entry.js"></script>
-  <script>
-    // Cek login saat halaman dibuka
-    requireLogin();
-  </script>
-</body>
+    <script src="js/storage.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/entry.js"></script>
+    <script>
+      // Cek login saat halaman dibuka
+      requireLogin();
+    </script>
+  </body>
 </html>
