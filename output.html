@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <title>Output Laporan - PLN Asset Tracker</title>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- HEADER -->
+  <div class="app-header">
+    <div class="header-top">
+      <div class="header-logo">
+        <div class="header-logo-img" style="background:white;border-radius:50%;padding:4px">
+          <img src="img/logo-pln.jpeg" alt="Logo PLN" style="width:28px;height:28px;object-fit:contain">
+        </div>
+        <div>
+          <div class="header-title">PLN Electricity Service</div>
+          <div class="header-subtitle">UL Palembang</div>
+        </div>
+      </div>
+      <button class="btn-logout" onclick="doLogout()">Keluar</button>
+    </div>
+  </div>
+
+  <!-- KONTEN -->
+  <div class="app-content">
+
+    <div class="section-header">Output Laporan</div>
+    <div class="section-sub">Rekap kontrak kendaraan &amp; peralatan per ULP</div>
+
+    <!-- Summary Cards -->
+    <div class="output-summary">
+      <div class="summary-card">
+        <div class="summary-label">Total Aset</div>
+        <div class="summary-value" id="sum_total">0</div>
+      </div>
+      <div class="summary-card">
+        <div class="summary-label">Hampir Habis</div>
+        <div class="summary-value warn" id="sum_hampir">0</div>
+      </div>
+      <div class="summary-card">
+        <div class="summary-label">Kritis</div>
+        <div class="summary-value danger" id="sum_kritis">0</div>
+      </div>
+      <div class="summary-card">
+        <div class="summary-label">Normal</div>
+        <div class="summary-value" id="sum_normal">0</div>
+      </div>
+    </div>
+
+    <!-- Tabel Output -->
+    <div class="card" style="padding:0;overflow:hidden">
+      <div style="padding:12px 14px;background:linear-gradient(135deg,#003087,#0057B8)">
+        <div style="color:white;font-size:13px;font-weight:700">📋 Tabel Rekap per Kantor Penerima</div>
+        <div style="color:rgba(255,255,255,0.7);font-size:11px;margin-top:2px">
+          Tap tombol ➕ Isi untuk memasukkan realisasi
+        </div>
+      </div>
+      <div id="outputTabelWrap">
+        <div class="empty-state" style="padding:40px 20px">
+          <div class="empty-icon">📊</div>
+          <div class="empty-text">Belum ada laporan</div>
+          <div class="empty-sub">Entry data terlebih dahulu</div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- app-content -->
+
+  <!-- BOTTOM NAV -->
+  <nav class="bottom-nav">
+    <a href="entry.html" class="nav-item">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+        <rect x="3" y="3" width="18" height="18" rx="3" stroke="#6B7A99" stroke-width="2"/>
+        <path d="M8 12h8M12 8v8" stroke="#6B7A99" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+      <span>Entry</span>
+    </a>
+    <a href="data.html" class="nav-item">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+        <path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2" stroke="#6B7A99" stroke-width="2" stroke-linecap="round"/>
+        <rect x="9" y="3" width="6" height="4" rx="1" stroke="#6B7A99" stroke-width="2"/>
+        <path d="M9 12h6M9 16h4" stroke="#6B7A99" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+      <span>Data</span>
+    </a>
+    <a href="output.html" class="nav-item active">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+        <path d="M18 20V10M12 20V4M6 20v-6" stroke="#003087" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+      <span>Output</span>
+    </a>
+  </nav>
+
+  <!-- Modal Realisasi -->
+  <div class="realisasi-modal" id="modalRealisasi">
+    <div class="realisasi-modal-inner">
+      <div class="modal-handle"></div>
+
+      <div style="font-size:16px;font-weight:800;color:#003087;margin-bottom:2px" id="modalNamaAset">—</div>
+      <div style="font-size:12px;color:#6B7A99;margin-bottom:18px" id="modalUlpAset">—</div>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px">
+        <div style="padding:12px;background:#EEF3FF;border-radius:12px;text-align:center">
+          <div style="font-size:10px;color:#6B7A99;font-weight:700;text-transform:uppercase">Jumlah Kontrak</div>
+          <div style="font-size:26px;font-weight:800;color:#003087" id="modalJmlKontrak">0</div>
+        </div>
+        <div style="padding:12px;background:#F0F4FA;border-radius:12px;text-align:center">
+          <div style="font-size:10px;color:#6B7A99;font-weight:700;text-transform:uppercase">Selisih</div>
+          <div style="font-size:26px;font-weight:800;color:#003087" id="modalSelisih">—</div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Masukkan Realisasi</label>
+        <input class="form-input" id="inputRealisasi" type="number" placeholder="0"
+          oninput="hitungSelisihModal()"
+          style="font-size:18px;font-weight:700;text-align:center">
+      </div>
+
+      <div style="display:flex;gap:10px;margin-top:8px">
+        <button onclick="tutupModalRealisasi()"
+          style="flex:1;padding:13px;border:2px solid #DDE3F0;border-radius:12px;background:white;
+                 font-size:14px;font-weight:700;font-family:inherit;cursor:pointer;color:#6B7A99">
+          Batal
+        </button>
+        <button onclick="simpanRealisasi()"
+          style="flex:2;padding:13px;background:linear-gradient(135deg,#003087,#00AEEF);color:white;
+                 border:none;border-radius:12px;font-size:14px;font-weight:700;font-family:inherit;
+                 cursor:pointer;box-shadow:0 4px 16px rgba(0,87,184,0.35)">
+          ✅ Simpan Realisasi
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast -->
+  <div class="toast" id="toast"></div>
+
+  <script src="js/storage.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/output.js"></script>
+</body>
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <title>Login - PLN Asset Tracker</title>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="login-page">
+
+  <div class="logo-wrap">
+    <img src="img/logo-pln.jpeg" alt="Logo PLN" style="width:80px;height:80px;object-fit:contain;border-radius:50%">
+  </div>
+
+  <div class="login-title">PT PLN Electricity Service</div>
+  <div class="login-sub">UL Palembang — Sistem Pencatatan Aset</div>
+
+  <div class="login-card">
+    <div class="form-group">
+      <label class="form-label">Username</label>
+      <input class="form-input" id="loginUser" type="text" placeholder="Masukkan username">
+    </div>
+    <div class="form-group">
+      <label class="form-label">Password</label>
+      <input class="form-input" id="loginPass" type="password" placeholder="Masukkan password">
+    </div>
+    <button class="btn-login" onclick="doLogin()">🔐 Masuk</button>
+    <div class="login-error" id="loginError"></div>
+    <div class="hint">Demo: admin / pln2024</div>
+  </div>
+
+  <script src="js/storage.js"></script>
+  <script src="js/auth.js"></script>
+</body>
+</html>
